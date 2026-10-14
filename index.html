@@ -95,32 +95,8 @@ html,body{height:100%;background:var(--deep);font-family:"Poppins","Segoe UI",sa
 #toast{position:fixed;left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translate(-50%,20px);opacity:0;z-index:20;background:var(--cream);color:var(--ink);border:2px solid var(--cream-edge);border-radius:14px;padding:10px 16px;font-size:12px;max-width:86vw;text-align:center;transition:opacity .3s,transform .3s;pointer-events:none;box-shadow:0 0 14px rgba(var(--glow),.5)}
 #toast.on{opacity:1;transform:translate(-50%,0)}
 
-/* ===== LAYAR "MIRINGKAN HP" (hanya tampil di HP saat portrait) ===== */
-html.rot #scene *,html.rot #scene *::before,html.rot #scene *::after,html.pend #scene *,html.pend #scene *::before,html.pend #scene *::after{animation-play-state:paused!important}
-#rotate{position:fixed;inset:0;z-index:50;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;padding:max(24px,env(safe-area-inset-top)) 28px max(24px,env(safe-area-inset-bottom));text-align:center;color:var(--lav);background:radial-gradient(ellipse at 50% 110%,#2a1b4d,var(--deep) 70%);opacity:0;visibility:hidden;pointer-events:none;transition:opacity .6s ease,visibility .6s}
-html.rot #rotate{opacity:1;visibility:visible;pointer-events:auto}
-#rotate .dots{position:absolute;inset:0;background-image:radial-gradient(rgba(243,214,150,.5) 1px,transparent 1.5px),radial-gradient(rgba(127,246,255,.4) 1px,transparent 1.5px);background-size:46px 46px,71px 71px;background-position:0 0,23px 31px;opacity:.35;animation:dotsDrift 14s linear infinite;pointer-events:none}
-@keyframes dotsDrift{to{background-position:0 46px,23px 102px}}
-.rp-stage{position:relative;width:190px;height:190px;display:grid;place-items:center}
-.rp-glow{position:absolute;inset:-30%;border-radius:50%;background:radial-gradient(circle,rgba(var(--glow),.28),rgba(10,10,28,0) 66%);animation:rpGlow 3.4s ease-in-out infinite}
-@keyframes rpGlow{50%{transform:scale(1.12);opacity:.75}}
-.rp-ring{position:absolute;inset:6%;border-radius:50%;border:1px dashed rgba(243,214,150,.4);animation:spin 24s linear infinite}
-.rp-phone{position:relative;width:70px;height:122px;border-radius:15px;border:4px solid var(--cream-edge);background:linear-gradient(160deg,rgba(246,236,217,.16),rgba(246,236,217,.04));box-shadow:0 0 24px rgba(var(--glow),.65),inset 0 0 16px rgba(var(--glow),.3);animation:phoneTilt 3.6s cubic-bezier(.65,0,.35,1) infinite}
-.rp-phone::before{content:"";position:absolute;top:6px;left:50%;width:22px;height:5px;margin-left:-11px;border-radius:4px;background:var(--cream-edge);opacity:.9}
-.rp-phone::after{content:"";position:absolute;left:10px;right:10px;bottom:14px;height:48px;border-radius:7px;background:linear-gradient(135deg,rgba(243,214,150,.55),rgba(127,246,255,.35));opacity:.8}
-.rp-phone i{position:absolute;left:10px;right:10px;top:22px;height:5px;border-radius:3px;background:rgba(246,236,217,.5);box-shadow:0 11px 0 -1px rgba(246,236,217,.3),0 22px 0 -1px rgba(246,236,217,.3)}
-@keyframes phoneTilt{0%,14%{transform:rotate(0)}40%,74%{transform:rotate(-90deg)}92%,100%{transform:rotate(0)}}
-.rp-arrow{position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none}
-.rp-arrow path{fill:none;stroke:#f3e3c0;stroke-width:3;stroke-linecap:round;stroke-dasharray:150;stroke-dashoffset:150;filter:drop-shadow(0 0 6px rgba(var(--glow),.9));animation:arrowDraw 3.6s ease-in-out infinite}
-.rp-arrow polygon{fill:#f3e3c0;opacity:0;filter:drop-shadow(0 0 6px rgba(var(--glow),.9));animation:arrowHead 3.6s ease-in-out infinite}
-@keyframes arrowDraw{0%,12%{stroke-dashoffset:150;opacity:0}20%{opacity:1}40%,74%{stroke-dashoffset:0;opacity:1}88%,100%{stroke-dashoffset:0;opacity:0}}
-@keyframes arrowHead{0%,36%{opacity:0}42%,74%{opacity:1}88%,100%{opacity:0}}
-#rotate .eyebrow{animation:none!important;opacity:1;filter:none;transform:none;font-size:clamp(.68rem,2.7vw,.85rem)}
-#rotate h2{font-size:clamp(1.3rem,6vw,1.75rem);font-weight:700;letter-spacing:.05em;line-height:1.35;color:#fff;text-shadow:0 2px 14px rgba(0,0,0,.7);margin-top:8px}
-#rotate p.sub{margin-top:10px;font-size:clamp(.82rem,3.4vw,.98rem);line-height:1.6;color:var(--lav);opacity:.85;max-width:300px;margin-inline:auto}
-#rotate .lockhint{margin-top:14px;font-size:12px;color:var(--gold);opacity:.9;letter-spacing:.04em}
-#rotate .txt{position:relative;z-index:1}
-@keyframes spin{to{transform:rotate(360deg)}}
+/* animasi intro ditahan sampai musik/ketuk-mulai siap */
+html.pend #scene *,html.pend #scene *::before,html.pend #scene *::after{animation-play-state:paused!important}
 
 /* tampilan landscape di HP: logo + teks di kiri, tombol di kanan */
 @media(orientation:landscape){
@@ -350,7 +326,7 @@ html.needtap #tapgate{opacity:1;visibility:visible;pointer-events:auto}
 @media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}.chev{animation:none}.card{transition:none}}
 </style>
 <script>
-// ===== DETEKSI HP & ORIENTASI (hanya HP yang diminta memiringkan layar; laptop/PC tidak) =====
+// ===== DETEKSI HP & ORIENTASI (HP tidak diminta memiringkan layar; website langsung bisa dipakai portrait maupun landscape) =====
 (function(){
   var ua=navigator.userAgent||'',uad=navigator.userAgentData;
   var uaMobile=/Android.+Mobile|iPhone|iPod|Windows Phone|IEMobile|BlackBerry|Opera Mini|Mobi/i.test(ua)||!!(uad&&uad.mobile===true);
@@ -362,7 +338,7 @@ html.needtap #tapgate{opacity:1;visibility:visible;pointer-events:auto}
     if(inFrame&&screen.orientation&&screen.orientation.type)return screen.orientation.type.indexOf('portrait')===0; // embed: pakai orientasi perangkat
     return window.innerHeight>window.innerWidth};
   var h=document.documentElement;h.classList.add('pend');
-  if(window.IS_PHONE){h.classList.add('is-phone');if(window.isPortrait())h.classList.add('rot')}
+  if(window.IS_PHONE)h.classList.add('is-phone');
 })();
 </script>
 </head>
@@ -404,20 +380,6 @@ html.needtap #tapgate{opacity:1;visibility:visible;pointer-events:auto}
 <div id="tapgate" role="button" tabindex="0" aria-label="Ketuk layar untuk memulai">
   <div class="tg-btn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 3v10.55A4 4 0 1 0 11 17V7h8V3H9z"/></svg></div>
   <div><h2 id="tg_title"></h2><p id="tg_sub"></p></div>
-</div>
-<div id="rotate" role="alert" aria-live="polite">
-  <div class="dots"></div>
-  <div class="rp-stage">
-    <i class="rp-glow"></i><i class="rp-ring"></i>
-    <svg class="rp-arrow" viewBox="0 0 190 190" aria-hidden="true"><path d="M44 40 A72 72 0 0 1 150 44"/><polygon points="150,30 164,52 140,56"/></svg>
-    <div class="rp-phone"><i></i></div>
-  </div>
-  <div class="txt">
-    <p class="eyebrow">Biar lebih maksimal</p>
-    <h2 id="r_title"></h2>
-    <p class="sub" id="r_sub"></p>
-    <p class="lockhint" id="r_lock"></p>
-  </div>
 </div>
 
 <div id="app" aria-hidden="true">
@@ -728,9 +690,6 @@ const TEXT = {
   hintIdle: "Sentuh & tahan tombolnya",
   hintHold: "Membuka kenangan...",
   beranda:  "Masuk ke Beranda",
-  rotateTitle: "Miringkan HP-mu ke samping",
-  rotateSub:   "Putar layar ke mode landscape (mendatar) untuk membuka website ini.",
-  rotateLock:  "🔓 Pastikan kunci rotasi layar HP sedang mati",
   tapTitle:    "Ketuk layar untuk memulai",
   tapSub:      "Nyalakan suara perangkatmu 🎵"
 };
@@ -741,7 +700,6 @@ const $=id=>document.getElementById(id);
 $('t_eyebrow').textContent=TEXT.eyebrow;$('t_caption').textContent=TEXT.caption;$('t_accent').textContent=TEXT.accent;
 $('t_brand').textContent=TEXT.brand;$('t_brandsub').textContent=TEXT.brandSub;
 $('tg_title').textContent=TEXT.tapTitle;$('tg_sub').textContent=TEXT.tapSub;
-$('r_title').textContent=TEXT.rotateTitle;$('r_sub').textContent=TEXT.rotateSub;$('r_lock').textContent=TEXT.rotateLock;
 $('t_btn').innerHTML=TEXT.button;$('hint').textContent=TEXT.hintIdle;$('t_home').textContent=TEXT.beranda;
 if(FOTO_KELAS){$('foto').src=FOTO_4K;$('foto').style.display='block';$('bg').style.backgroundImage='url("'+FOTO_BLUR+'")';$('wipe').style.backgroundImage='linear-gradient(180deg,rgba(4,10,30,.6),rgba(4,10,30,.38) 45%,rgba(4,10,30,.82)),url("'+FOTO_KELAS+'")'}
 if(LOGO){$('logoImg').src=LOGO}
@@ -875,16 +833,15 @@ function finish(){done=true;holding=false;chime();if(navigator.vibrate)navigator
   const[cx,cy]=center();burst(cx,cy,180,10);setTimeout(()=>burst(W/2,H/2,140,9),280);setTimeout(()=>burst(W/2,H*.35,100,8),520);
   $('gate').classList.add('gone');setTimeout(()=>{$('gate').style.display='none';$('links').classList.add('show')},700)}
 
-// ===== MIRINGKAN HP: intro baru mulai setelah HP dimiringkan (landscape). Laptop/PC langsung mulai =====
+// ===== INTRO: langsung mulai di semua perangkat (HP tidak diminta memiringkan layar) =====
 let introStarted=false,lastPortrait=null;
 function startIntro(){if(introStarted)return;introStarted=true;setTimeout(()=>burst(W/2,H*.36,120,9),8900)} // percikan saat logo muncul
 function reseedParticles(){for(const p of P){p.x=Math.random()*W;p.y=Math.random()*H}}
 function applyOrientation(){
-  const need=!!window.IS_PHONE&&window.isPortrait();
-  document.documentElement.classList.toggle('rot',need);
+  // kalau pengguna memutar HP sendiri, sesuaikan kanvas partikel
   if(lastPortrait!==null&&lastPortrait!==window.isPortrait()){size();reseedParticles()}
   lastPortrait=window.isPortrait();
-  if(!need&&!document.documentElement.classList.contains('pend'))startIntro();
+  if(!document.documentElement.classList.contains('pend'))startIntro();
 }
 addEventListener('resize',applyOrientation);addEventListener('orientationchange',()=>setTimeout(applyOrientation,150));
 if(screen.orientation&&screen.orientation.addEventListener)screen.orientation.addEventListener('change',applyOrientation);
